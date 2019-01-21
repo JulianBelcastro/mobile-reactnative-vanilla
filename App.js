@@ -8,15 +8,8 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
-
-import t from 'tcomb-form-native';
-
-const Form = t.form.Form;
-
-const User = t.struct({
-    Firstname: t.String,
-    Lastname: t.String,
-});
+import DatePicker from 'react-native-datepicker';
+import Moment from 'react-moment';
 
 const Options = {
     order:[ 'Firstname', 'Lastname'],
@@ -38,31 +31,37 @@ export default class App extends Component{
     constructor(){
     super();
     this.state={
-        Firstname:'',
-        Lastname:''
+        firstname:'',
+        lastname:'',
+        dateOfBirth:'30-01-1980',
+        serverResponse: null
         }
     }
 
     handleSubmit = (text, field) => {
 
-    if(field=='Firstname')
+    if(field == 'firstname')
     {
         this.setState({
-        Firstname:text,
+        firstname:text,
         })
     }
-    else if(field == 'Lastname')
+    else if(field == 'lastname')
     {
         this.setState({
-        Lastname:text,
+        lastname:text,
         })
+    }
+    else if(field == 'dateOfBirth')
+    {
     }
     }
 
     submit(){
         let collection={}
-        collection.Firstname = this.state.Firstname,
-        collection.Lastname = this.state.Lastname
+        collection.firstname = this.state.firstname,
+        collection.lastname = this.state.lastname,
+        collection.dateOfBirth = this.state.dateOfBirth,
         console.warn(collection);
 
         var url = 'http://techchallenge.mountain-pass.com.au/api/v1/saveUserData';
@@ -75,8 +74,14 @@ export default class App extends Component{
             })
          }).then(res =>res.json())
          .catch(error => console.error('Error:', error))
-         .then(response => console.log('Success:', response));
-    }
+         .then(response => {
+            this.setState({
+                serverResponse:response
+         });
+         console.warn(this.state.serverResponse);
+    });
+   }
+
     render(){
         return(
         <View style={styles.container}>
@@ -86,16 +91,25 @@ export default class App extends Component{
                 placeholder="Please enter a Firstname"
                 style={styles.input}
                 underlineColorAndroid="transparent"
-                onChangeText={(text => this.handleSubmit(text, 'Firstname'))}
+                onChangeText={(text => this.handleSubmit(text, 'firstname'))}
             />
-                    <Text style={styles.inputTitle}>Lastname</Text>
 
+            <Text style={styles.inputTitle}>Lastname</Text>
            <TextInput
                 placeholder="Please enter a Lastname"
                 style={styles.input}
                 underlineColorAndroid="transparent"
-                onChangeText={(text => this.handleSubmit(text, 'Lastname'))}
+                onChangeText={(text => this.handleSubmit(text, 'lastname'))}
              />
+                <DatePicker
+                style={styles.datePicker}
+                 mode ="date"
+                 confirmBtnText="Confirm"
+                 cancelBtnText="Cancel"
+                 //onDateChange={(date => this.handleSubmit(date, 'dateOfBirth'))}
+                 />
+
+                 <Text style={styles.response}> -RESPONSE HERE-</Text>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>this.submit()}>
                 <Text style={styles.button}>
                     Submit
@@ -108,13 +122,14 @@ export default class App extends Component{
 
 const styles = StyleSheet.create({
     header: {
-    height: 50,
-    backgroundColor: 'blue',
     textAlign: 'center',
-      fontSize: 24,
-      color: 'white',
-      fontWeight: "300",
-      marginBottom: 20,
+    paddingTop: 20,
+    height: 60,
+    backgroundColor: 'blue',
+    fontSize: 24,
+    color: 'white',
+    fontWeight: "300",
+    marginBottom: 20,
     },
   input: {
   height: 50,
@@ -140,6 +155,17 @@ const styles = StyleSheet.create({
   textAlign: 'center',
   marginLeft: 20,
   marginRight: 20,
-  marginTop: 250,
+  marginTop: 160,
+    },
+    datePicker: {
+    width: 300,
+    alignItems: 'center',
+    margin: 20
+    },
+    response: {
+    color: 'blue',
+    fontSize: 30,
+    textAlign: 'center',
+    marginTop: 20,
     }
 });
