@@ -8,6 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import renderIf from './renderIf';
 import DatePicker from 'react-native-datepicker';
 import Moment from 'react-moment';
 
@@ -42,15 +43,20 @@ export default class App extends Component{
     }
 
     submit(){
+        if(this.state.firstname == '' || this.state.lastname == ''){
+        this.setState({
+        serverResponse:'Please enter a valid firstname and lastname!',
+            })
+        return;
+        }
         let collection={}
         collection.firstname = this.state.firstname,
         collection.lastname = this.state.lastname,
         collection.dateOfBirth = this.state.dateOfBirth,
-        console.warn(collection);
+        //console.warn(collection);
 
-        var url = 'http://techchallenge.mountain-pass.com.au/api/v1/saveUserData';
 
-        fetch(url,{
+        fetch('http://techchallenge.mountain-pass.com.au/api/v1/saveUserData',{
             method: 'POST',
             body: JSON.stringify(collection),
             headers: new Headers({
@@ -60,10 +66,11 @@ export default class App extends Component{
          .catch(error => console.error('Error:', error))
          .then(response => {
             this.setState({
-                serverResponse:response
+
+                serverResponse:JSON.stringify(response)
          });
 
-         console.warn(this.state.serverResponse);
+         console.log(JSON.stringify(response));
     });
    }
 
@@ -94,8 +101,13 @@ export default class App extends Component{
                  //onDateChange={(date => this.handleSubmit(date, 'dateOfBirth'))}
                  />
 
-           <Text style={styles.response}> -RESPONSE HERE-</Text>
-           <TouchableOpacity activeOpacity={0.5} onPress={()=>this.submit()}>
+                 {renderIf(this.state.serverResponse,
+                   <Text style={styles.response}>
+                    {this.state.serverResponse}
+                     </Text>)}
+
+
+           <TouchableOpacity activeOpacity={0.5} onPress={()=>{this.submit()}}>
                 <Text style={styles.button}>
                     Submit
                 </Text>
@@ -139,7 +151,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginLeft: 20,
       marginRight: 20,
-      marginTop: 160,
+      marginTop: 140,
         },
   datePicker: {
       width: 300,
