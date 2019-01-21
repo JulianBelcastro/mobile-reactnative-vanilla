@@ -1,0 +1,4 @@
+#Mon Jan 21 12:31:43 AEDT 2019
+base.0=C\:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

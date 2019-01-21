@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\ic_launcher.png",
+        "source": "C:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi\\ic_launcher_round.png",
+        "source": "C:\\Git Projects\\mobile-reactnative-vanilla\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    }
+]
