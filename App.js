@@ -11,21 +11,6 @@ import {Platform, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'rea
 import DatePicker from 'react-native-datepicker';
 import Moment from 'react-moment';
 
-const Options = {
-    order:[ 'Firstname', 'Lastname'],
-    fields:{
-        firstName: {
-        placeholder: 'Please enter a Firstname',
-        error: 'Try again',
-        },
-        lastName: {
-        placeholder: 'Please enter a Lastname',
-                error: 'Try again',
-        },
-
-    }
-}
-
 export default class App extends Component{
 
     constructor(){
@@ -53,8 +38,7 @@ export default class App extends Component{
         })
     }
     else if(field == 'dateOfBirth')
-    {
-    }
+    {}
     }
 
     submit(){
@@ -78,6 +62,7 @@ export default class App extends Component{
             this.setState({
                 serverResponse:response
          });
+
          console.warn(this.state.serverResponse);
     });
    }
@@ -94,7 +79,7 @@ export default class App extends Component{
                 onChangeText={(text => this.handleSubmit(text, 'firstname'))}
             />
 
-            <Text style={styles.inputTitle}>Lastname</Text>
+           <Text style={styles.inputTitle}>Lastname</Text>
            <TextInput
                 placeholder="Please enter a Lastname"
                 style={styles.input}
@@ -109,12 +94,12 @@ export default class App extends Component{
                  //onDateChange={(date => this.handleSubmit(date, 'dateOfBirth'))}
                  />
 
-                 <Text style={styles.response}> -RESPONSE HERE-</Text>
-            <TouchableOpacity activeOpacity={0.5} onPress={()=>this.submit()}>
+           <Text style={styles.response}> -RESPONSE HERE-</Text>
+           <TouchableOpacity activeOpacity={0.5} onPress={()=>this.submit()}>
                 <Text style={styles.button}>
                     Submit
                 </Text>
-            </TouchableOpacity>
+           </TouchableOpacity>
         </View>
         );
     }
@@ -122,50 +107,49 @@ export default class App extends Component{
 
 const styles = StyleSheet.create({
     header: {
-    textAlign: 'center',
-    paddingTop: 20,
-    height: 60,
-    backgroundColor: 'blue',
-    fontSize: 24,
-    color: 'white',
-    fontWeight: "300",
-    marginBottom: 20,
+        textAlign: 'center',
+        paddingTop: 20,
+        height: 60,
+        backgroundColor: 'blue',
+        fontSize: 24,
+        color: 'white',
+        fontWeight: "300",
+        marginBottom: 20,
     },
-  input: {
-  height: 50,
-  fontSize: 24,
-  margin: 20,
-  //borderStyle: 'rounded',
-  borderWidth: 1,
+    input: {
+        height: 50,
+        fontSize: 24,
+        margin: 20,
+        borderWidth: 1,
   },
   inputTitle: {
-  color: '#000000',
-  margin: 20,
-  fontSize: 24,
-  marginBottom: 2,
-  },
+      color: '#000000',
+      margin: 20,
+      fontSize: 24,
+      marginBottom: 2,
+      },
   container: {
-    backgroundColor: '#ffffff',
-  },
+       backgroundColor: '#ffffff',
+      },
   button: {
-  padding: 20,
-  backgroundColor: 'blue',
-  color: 'white',
-  fontSize: 24,
-  textAlign: 'center',
-  marginLeft: 20,
-  marginRight: 20,
-  marginTop: 160,
-    },
-    datePicker: {
-    width: 300,
-    alignItems: 'center',
-    margin: 20
-    },
-    response: {
-    color: 'blue',
-    fontSize: 30,
-    textAlign: 'center',
-    marginTop: 20,
-    }
+      padding: 20,
+      backgroundColor: 'blue',
+      color: 'white',
+      fontSize: 24,
+      textAlign: 'center',
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop: 160,
+        },
+  datePicker: {
+      width: 300,
+      alignItems: 'center',
+      margin: 20
+        },
+  response: {
+      color: 'blue',
+      fontSize: 30,
+      textAlign: 'center',
+      marginTop: 20,
+      }
 });
