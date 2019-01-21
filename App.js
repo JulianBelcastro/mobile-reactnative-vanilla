@@ -34,25 +34,69 @@ const Options = {
 }
 
 export default class App extends Component{
-    handleSubmit = () => {
-    };
+
+    constructor(){
+    super();
+    this.state={
+        Firstname:'',
+        Lastname:''
+        }
+    }
+
+    handleSubmit = (text, field) => {
+
+    if(field=='Firstname')
+    {
+        this.setState({
+        Firstname:text,
+        })
+    }
+    else if(field == 'Lastname')
+    {
+        this.setState({
+        Lastname:text,
+        })
+    }
+    }
+
+    submit(){
+        let collection={}
+        collection.Firstname = this.state.Firstname,
+        collection.Lastname = this.state.Lastname
+        console.warn(collection);
+
+        var url = 'http://techchallenge.mountain-pass.com.au/api/v1/saveUserData';
+
+        fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(collection),
+            headers: new Headers({
+                'Content-Type' : 'application/json',
+            })
+         }).then(res =>res.json())
+         .catch(error => console.error('Error:', error))
+         .then(response => console.log('Success:', response));
+    }
     render(){
         return(
         <View style={styles.container}>
         <Text style={styles.header}> Add a New User </Text>
         <Text style={styles.inputTitle}>Firstname</Text>
            <TextInput
-            placeholder="Please enter a Firstname"
-            style={styles.input}
-            underlineColorAndroid="transparent"
+                placeholder="Please enter a Firstname"
+                style={styles.input}
+                underlineColorAndroid="transparent"
+                onChangeText={(text => this.handleSubmit(text, 'Firstname'))}
             />
                     <Text style={styles.inputTitle}>Lastname</Text>
+
            <TextInput
                 placeholder="Please enter a Lastname"
                 style={styles.input}
                 underlineColorAndroid="transparent"
+                onChangeText={(text => this.handleSubmit(text, 'Lastname'))}
              />
-            <TouchableOpacity activeOpacity={0.5}>
+            <TouchableOpacity activeOpacity={0.5} onPress={()=>this.submit()}>
                 <Text style={styles.button}>
                     Submit
                 </Text>
